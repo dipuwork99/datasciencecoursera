@@ -66,5 +66,32 @@ pollutantmean <- function(directory  , pollutant , id = 1:332)
       summaryFile <- rbind(summaryFile , readFile[i , ])
     }
   }
-  summaryFile
+  mean(summaryFile[ , pollutant] , na.rm = TRUE)
+}
+
+
+complete <- function(directory , id = 1:332)
+{
+  obsMatrix <- NULL
+  obsMatrix <- data.frame("id" = integer() , "nobs" = integer())
+  print(names(obsMatrix))
+  print(dim(obsMatrix))
+  for(fileId in id)
+  {
+    fileName = paste(directory , "/" , cFileName(fileId , 3) , ".csv" , sep = "")
+    print(fileName)
+    readFile <- read.csv(fileName)
+    size <- dim(readFile)[1]
+    print("dimensions of items")
+    print(class(size))
+    print(class(fileId))
+    print(names(obsMatrix))
+    obsMatrix <- rbind(obsMatrix , list(fileId , size))
+    print(dim(obsMatrix))
+    print(names(obsMatrix))
+    
+  }
+  obsMatrix <- setNames(obsMatrix , c("id" , "nobs"))
+  print(obsMatrix)
+  obsMatrix
 }
